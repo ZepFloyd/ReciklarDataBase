@@ -1,6 +1,7 @@
 # ReciklarDataBase
 Esta es una actividad para la ayudantía del curso de Diseño de Software, impartida por el Sr. Paolo Caviedes.
 Los comandos de los queries se encuentran al final del archivo .txt y a continuación:
+
 -- QUERIES
 
 -- 1.Obtener todos los clientes de Reciklar
