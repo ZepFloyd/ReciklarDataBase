@@ -1,0 +1,261 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`CLIENTE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`CLIENTE` (
+  `RUT` INT NULL,
+  `Tipo` VARCHAR(45) NULL,
+  `Nombre` VARCHAR(45) NULL,
+  PRIMARY KEY (`RUT`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`table1`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`table1` (
+)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`SUCURSAL`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`SUCURSAL` (
+  `idSUCURSAL` VARCHAR(25) NULL,
+  PRIMARY KEY (`idSUCURSAL`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`FECHA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`FECHA` (
+  `idFECHA` DATETIME NULL DEFAULT AAAA.MM.DD.HH.mm,
+  PRIMARY KEY (`idFECHA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`CIUDAD`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`CIUDAD` (
+  `idCIUDAD` VARCHAR(25) NULL,
+  PRIMARY KEY (`idCIUDAD`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`CHOFER`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`CHOFER` (
+  `idCHOFER` INT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  PRIMARY KEY (`idCHOFER`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`PESO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`PESO` (
+  `idPESO` DECIMAL NULL DEFAULT 00.00,
+  `Unidad Medida` VARCHAR(45) NULL,
+  PRIMARY KEY (`idPESO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`RESIDUO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`RESIDUO` (
+  `Tipo Residuo` VARCHAR(25) NULL,
+  PRIMARY KEY (`Tipo Residuo`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`VEHICULO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`VEHICULO` (
+  `idVEHICULO` INT NULL,
+  `Marca` VARCHAR(45) NULL,
+  `Modelo` VARCHAR(45) NULL,
+  `Year` VARCHAR(45) NULL,
+  PRIMARY KEY (`idVEHICULO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`PEONETA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`PEONETA` (
+  `idPEONETA` INT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  PRIMARY KEY (`idPEONETA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`DIRECCION`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`DIRECCION` (
+  `idDIRECCION` VARCHAR(25) NULL,
+  PRIMARY KEY (`idDIRECCION`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`RELACION RETIRO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`RELACION RETIRO` (
+  `CLIENTE_RUT` INT NULL,
+  `FECHA_idFECHA` DATETIME NULL,
+  `SUCURSAL_idSUCURSAL` INT NULL,
+  `DIRECCION_idDIRECCION` INT NULL,
+  `CIUDAD_idCIUDAD` INT NULL,
+  `PEONETA_idPEONETA` INT NULL,
+  `RESIDUO_Tipo Residuo` VARCHAR(25) NOT NULL,
+  `PESO_idPESO` DECIMAL NOT NULL,
+  PRIMARY KEY (`CLIENTE_RUT`, `FECHA_idFECHA`, `SUCURSAL_idSUCURSAL`, `DIRECCION_idDIRECCION`, `CIUDAD_idCIUDAD`, `PEONETA_idPEONETA`, `RESIDUO_Tipo Residuo`, `PESO_idPESO`),
+  INDEX `fk_RELACION RETIRO_CIUDAD1_idx` (`CIUDAD_idCIUDAD` ASC) VISIBLE,
+  INDEX `fk_RELACION RETIRO_CLIENTE1_idx` (`CLIENTE_RUT` ASC) VISIBLE,
+  INDEX `fk_RELACION RETIRO_SUCURSAL1_idx` (`SUCURSAL_idSUCURSAL` ASC) VISIBLE,
+  INDEX `fk_RELACION RETIRO_FECHA1_idx` (`FECHA_idFECHA` ASC) VISIBLE,
+  INDEX `fk_RELACION RETIRO_PEONETA1_idx` (`PEONETA_idPEONETA` ASC) VISIBLE,
+  INDEX `fk_RELACION RETIRO_DIRECCION1_idx` (`DIRECCION_idDIRECCION` ASC) VISIBLE,
+  INDEX `fk_RELACION RETIRO_RESIDUO1_idx` (`RESIDUO_Tipo Residuo` ASC) VISIBLE,
+  INDEX `fk_RELACION RETIRO_PESO1_idx` (`PESO_idPESO` ASC) VISIBLE,
+  CONSTRAINT `fk_RELACION RETIRO_CIUDAD1`
+    FOREIGN KEY (`CIUDAD_idCIUDAD`)
+    REFERENCES `mydb`.`CIUDAD` (`idCIUDAD`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RETIRO_CLIENTE1`
+    FOREIGN KEY (`CLIENTE_RUT`)
+    REFERENCES `mydb`.`CLIENTE` (`RUT`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RETIRO_SUCURSAL1`
+    FOREIGN KEY (`SUCURSAL_idSUCURSAL`)
+    REFERENCES `mydb`.`SUCURSAL` (`idSUCURSAL`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RETIRO_FECHA1`
+    FOREIGN KEY (`FECHA_idFECHA`)
+    REFERENCES `mydb`.`FECHA` (`idFECHA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RETIRO_PEONETA1`
+    FOREIGN KEY (`PEONETA_idPEONETA`)
+    REFERENCES `mydb`.`PEONETA` (`idPEONETA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RETIRO_DIRECCION1`
+    FOREIGN KEY (`DIRECCION_idDIRECCION`)
+    REFERENCES `mydb`.`DIRECCION` (`idDIRECCION`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RETIRO_RESIDUO1`
+    FOREIGN KEY (`RESIDUO_Tipo Residuo`)
+    REFERENCES `mydb`.`RESIDUO` (`Tipo Residuo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RETIRO_PESO1`
+    FOREIGN KEY (`PESO_idPESO`)
+    REFERENCES `mydb`.`PESO` (`idPESO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`RELACION RUTA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`RELACION RUTA` (
+  `SUCURSAL_idSUCURSAL` INT NULL,
+  `FECHA_idFECHA` DATETIME NULL,
+  `VEHICULO_idVEHICULO` INT NULL,
+  `CHOFER_idCHOFER` INT NULL,
+  `PEONETA_idPEONETA` INT NULL,
+  PRIMARY KEY (`SUCURSAL_idSUCURSAL`, `FECHA_idFECHA`, `VEHICULO_idVEHICULO`, `CHOFER_idCHOFER`, `PEONETA_idPEONETA`),
+  INDEX `fk_RELACION RUTA_VEHICULO1_idx` (`VEHICULO_idVEHICULO` ASC) VISIBLE,
+  INDEX `fk_RELACION RUTA_CHOFER1_idx` (`CHOFER_idCHOFER` ASC) VISIBLE,
+  INDEX `fk_RELACION RUTA_PEONETA1_idx` (`PEONETA_idPEONETA` ASC) VISIBLE,
+  INDEX `fk_RELACION RUTA_FECHA1_idx` (`FECHA_idFECHA` ASC) VISIBLE,
+  CONSTRAINT `fk_RELACION RUTA_SUCURSAL1`
+    FOREIGN KEY (`SUCURSAL_idSUCURSAL`)
+    REFERENCES `mydb`.`SUCURSAL` (`idSUCURSAL`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RUTA_VEHICULO1`
+    FOREIGN KEY (`VEHICULO_idVEHICULO`)
+    REFERENCES `mydb`.`VEHICULO` (`idVEHICULO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RUTA_CHOFER1`
+    FOREIGN KEY (`CHOFER_idCHOFER`)
+    REFERENCES `mydb`.`CHOFER` (`idCHOFER`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RUTA_PEONETA1`
+    FOREIGN KEY (`PEONETA_idPEONETA`)
+    REFERENCES `mydb`.`PEONETA` (`idPEONETA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RELACION RUTA_FECHA1`
+    FOREIGN KEY (`FECHA_idFECHA`)
+    REFERENCES `mydb`.`FECHA` (`idFECHA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+
+-- QUERIES
+
+-- 1.Obtener todos los clientes de Reciklar
+SELECT * FROM CLIENTE;
+
+-- 2.Obtener todos los retiros que han realizado para un cliente específico
+SELECT FROM RELACION RETIRO WHERE CLIENTE_RUT = 'rut de client específico';
+
+-- 3.Obtener todas las rutas realizadas entre 2 fechas
+SELECT FECHA_idFECHA FROM RELACION RUTA WHERE FECHA_idFECHA BETWEEN 'AAAA.MM.DD.HH.mm' AND 'AAAA.MM.DD.HH.mm';
+
+-- 4.Obtener el cliente con más retiros
+SELECT CLIENTE_RUT FROM RELACION RETIRO GROUPED BY CLIENTE_RUT ORDER BY COUNT(*) DESC LIMIT 1;
+
+--5.Obtener el retiro con más Kilogramos de desechos
+SELECT MAX(PESO_idPESO) FROM RELACION RETIRO;
+
+--6.Obtener una lista de clientes, retiros y residuos retirados
+SELECT CLIENTE_RUT, FECHA_idFECHA, RESIDUO_Tipo Residuo FROM RELACION RETIRO;
+
+
+
+
+
+
+
