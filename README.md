@@ -1,5 +1,6 @@
 # ReciklarDataBase
 Alumno: Elías González C.
+
 Esta es una actividad para la ayudantía del curso de Diseño de Software, impartida por el Sr. Paolo Caviedes.
 Los comandos de los queries se encuentran al final del archivo .txt y a continuación:
 
